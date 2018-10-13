@@ -1,0 +1,24 @@
+.dashboard {
+  display: grid;
+  grid-template-rows: 1 1;
+}
+
+.d-top {
+  display: grid;
+  grid-template-columns: 1 1 1 1 1;
+}
+
+.square {
+  height: 20vh;
+  width: 30vw;
+  background-color: white;
+  border: 1px solid #6161;
+}
+
+.first {
+  grid-column-start: 2;
+}
+
+.second {
+  grid-column-start: 4;
+}

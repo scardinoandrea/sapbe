@@ -1,0 +1,36 @@
+.navbar {
+  height: 10vh;
+  padding-top: 4vh;
+  background-color: white !important;
+
+}
+
+.navbar-brand {
+  display: flex !important;
+  color: #616161;
+  font-weight: bold;
+}
+
+.text {
+  font-size: x-small;
+  margin-top: 1.7vh;
+  margin-left: 1vw;
+  color: #616161;
+}
+
+::ng-deep {
+  .dropdown {
+    .btn {
+      color: #616161 !important;
+      background-color: transparent !important;
+      border: none !important;
+      box-shadow: none;
+      font-size: small;
+      margin-bottom: 3vh;
+    }
+
+    .dropdown-menu {
+      left: -68px !important;
+    }
+  }
+}

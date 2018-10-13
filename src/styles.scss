@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bootstrap/dist/css/bootstrap.css';
+
+body {
+  //background-color: #F8F8F8;
+  background-image: url('./assets/pattern.png');
+  background-repeat: repeat;
+}
+
+.sapbe-navbar {
+  height: 15vh;
+}
+
+.sapbe-body {
+  min-height: 70vh;
+  /* padding-bottom: 5vh;
+  padding-top: 5vh; */
+}
+
+.sapbe-footer {
+  height: 5vh;
+}
