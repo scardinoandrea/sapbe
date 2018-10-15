@@ -1,3 +1,53 @@
-<p>
-  students works!
-</p>
+<div class="students">
+  <div class="s-top">
+    <div>
+      <h1><strong>Andrea Scardino</strong></h1>
+      <p><strong>Tipología:</strong> Académica</p>
+      <p><strong>Cédula:</strong> 26510233</p>
+      <p><strong>Periodo de ingreso:</strong> 1415-1</p>
+      <p><strong>Tutor:</strong> Anais Guillen</p>
+      <button type="button" class="btn mr-2">Reasignar tutor</button>
+    </div>
+    <div class="square">
+      <p>100%</p>
+    </div>
+  </div>
+  <div class="s-bottom">
+    <div class="square-bottom">
+      <div class="square-botton-top">
+        <div>
+          <p class="table-title">Anotaciones</p>
+        </div>
+        <div>
+          <input class="form-control border rounded mr-3" type="search" placeholder="Búsqueda" [(ngModel)]="searchText"
+            id="search">
+        </div>
+      </div>
+      <table class="table table-responsive-md">
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Comentario</th>
+            <th scope="col">Características</th>
+            <th scope="col">Periodo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of search() ; let i = index;">
+            <th scope="row">{{item.date}}</th>
+            <td>{{item.type}}</td>
+            <td>{{item.comments | slice:0:20 }}...</td>
+            <td>{{item.characteristics | slice:0:20 }}...</td>
+            <td>{{item.period}}</td>
+            <td><i class="fas fa-eye"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="s-buttons">
+      <button type="button" class="btn" (click)="open(tutor)">Agregar anotacion</button>
+    </div>
+  </div>
+</div>
