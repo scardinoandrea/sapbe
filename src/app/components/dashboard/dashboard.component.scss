@@ -1,11 +1,25 @@
 .dashboard {
   display: grid;
-  grid-template-rows: 1 1;
+  grid-template-rows: 3fr 1fr 8fr 1fr;
 }
 
 .d-top {
-  display: grid;
-  grid-template-columns: 1 1 1 1 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.d-top p {
+  font-size: xx-large;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.d-bottom {
+  grid-row-start: 3;
 }
 
 .square {
@@ -13,12 +27,82 @@
   width: 30vw;
   background-color: white;
   border: 1px solid #6161;
+  border-radius: 10px;
 }
 
-.first {
-  grid-column-start: 2;
+.square-bottom {
+  height: 45vh;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #6161;
+  display: grid;
+  grid-template-rows: 1fr 4fr;
+  border-radius: 10px;
 }
 
-.second {
-  grid-column-start: 4;
+.square-botton-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-title {
+  font-size: xx-large;
+  margin: auto;
+  margin-left: 1vw;
+  font-weight: bold;
+}
+
+.square-bottom .form-control{
+  width: 42vw;
+  height: 3vh;
+  margin-top: 1.25rem;
+}
+
+.table {
+  grid-row-start: 2;
+  text-align: center;
+  overflow: auto;
+  overflow-x: scroll;
+  width: 100%;
+}
+
+i {
+  cursor: pointer;
+}
+
+.d-buttons{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+@media only screen and (min-width: 767px) {
+
+  tbody {
+    height: 28vh;
+    display: block;
+    overflow: auto;
+  }
+
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    overflow: auto;
+  }
+
+  thead {
+    width: calc(100% - 1em)
+  }
+}
+
+@media only screen and (max-width: 766px) {
+  .table {
+    max-width: 92vw;
+  }
+  .d-top p {
+    font-size: x-large;
+  }
+
 }

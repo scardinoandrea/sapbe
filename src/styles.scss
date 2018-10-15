@@ -19,3 +19,32 @@ body {
 .sapbe-footer {
   height: 5vh;
 }
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.btn{
+  background-color: #fd7e14;
+  border: none;
+  font-weight: bold;
+  color: white;
+  opacity: 0.75;
+  border: 1px solid #a94e00;
+  border-radius: 0;
+}

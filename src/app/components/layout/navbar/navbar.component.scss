@@ -1,21 +1,26 @@
 .navbar {
   height: 10vh;
-  padding-top: 4vh;
+  padding-top: 2vh;
   background-color: white !important;
 
 }
 
 .navbar-brand {
   display: flex !important;
-  color: #616161;
+  color: #fd7e14;;
   font-weight: bold;
+  font-size: xx-large;
+  align-self: center;
 }
 
 .text {
   font-size: x-small;
-  margin-top: 1.7vh;
+  margin-top: 3.5vh;
   margin-left: 1vw;
   color: #616161;
+  display: flex;
+  align-content: left;
+  align-self: flex-end;
 }
 
 ::ng-deep {
