@@ -11,8 +11,8 @@
           <label for="inputPassword"><i class="fas fa-key"></i> Contraseña</label>
           <input type="password" class="form-control" id="inputPassword">
         </div>
-        <button type="submit" class="btn mr-4" href="/dashboard">Iniciar sesión</button>
-        <a href="/register">Registrate</a>
+        <button type="submit" class="btn mr-4" [routerLink]="['/dashboard']" >Iniciar sesión</button>
+        <a [routerLink]="['/register']">Registrate</a>
       </form>
     </div>
   </div>
