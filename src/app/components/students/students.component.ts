@@ -9,7 +9,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 export class StudentsComponent implements OnInit {
   searchText: any;
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
   }
@@ -29,6 +29,10 @@ export class StudentsComponent implements OnInit {
     if (this.searchText) {
       return this.filterIt(this.annotations, this.searchText.toLowerCase());
     }
+  }
+
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
   }
 
   annotations=[
