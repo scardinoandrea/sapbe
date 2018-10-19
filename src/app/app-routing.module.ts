@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule,Routes } from '@angular/router'
+import { RouterModule,Routes, CanActivate } from '@angular/router'
+import { AuthGuard } from './services/auth.guard';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { StudentsComponent } from './components/students/students.component';
@@ -13,7 +14,6 @@ import { RegisterComponent } from './components/register/register.component';
 const routes: Routes = [
   {
     path: '',
-    //canActivate: [AuthGuard],
     children:
     [
     {path: 'dashboard', component:DashboardComponent },
@@ -21,8 +21,8 @@ const routes: Routes = [
     ],
     component: LayoutComponent
   },
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent}
+  {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
+  {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]}
   //{path: '**', redirectTo: 'login' },
 ];
 

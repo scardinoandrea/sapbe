@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebaseConfig: {
+  firebase: {
     apiKey: "AIzaSyCVnxyqMxuBrDZXpPTz9kqDQROP9IPWJs8",
     authDomain: "sapbe-unimet.firebaseapp.com",
     databaseURL: "https://sapbe-unimet.firebaseio.com",

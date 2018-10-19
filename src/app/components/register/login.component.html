@@ -2,17 +2,16 @@
   <div class="square">
     <div class="form">
       <h4>Iniciar sesión</h4>
-      <form [formGroup]="loginForm">
+      <form>
         <div class="form-group">
           <label for="inputEmail"><i class="fas fa-envelope"></i> Correo</label>
-          <input type="email" class="form-control" id="inputEmail1" formControlName="email">
+          <input type="email" class="form-control" id="inputEmail1">
         </div>
         <div class="form-group">
           <label for="inputPassword"><i class="fas fa-key"></i> Contraseña</label>
-          <input type="password" class="form-control" id="inputPassword" formControlName="password">
+          <input type="password" class="form-control" id="inputPassword">
         </div>
-        <label class="error">{{errorMessage}}</label>
-        <button type="submit" class="btn mr-4" (click)="tryLogin(loginForm.value)" >Iniciar sesión</button>
+        <button type="submit" class="btn mr-4" [routerLink]="['/dashboard']" >Iniciar sesión</button>
         <a [routerLink]="['/register']">Registrate</a>
       </form>
     </div>

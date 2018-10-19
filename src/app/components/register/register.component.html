@@ -1,3 +1,24 @@
-<p>
-  register works!
-</p>
+<div class="register">
+  <div class="square">
+    <div class="form">
+      <form [formGroup]="registerForm">
+        <!-- <div class="form-group">
+          <label for="inputUser"><i class="fas fa-user"></i> Usuario</label>
+          <input type="text" class="form-control" id="inputUser" formControlName="user" required>
+        </div> -->
+        <div class="form-group">
+          <label for="inputEmail"><i class="fas fa-envelope"></i> Correo</label>
+          <input type="email" class="form-control" id="inputEmail1" formControlName="email" required>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword"><i class="fas fa-key"></i> Contraseña</label>
+          <input type="password" class="form-control" id="inputPassword" formControlName="password" required>
+        </div>
+        <label class="error">{{errorMessage}}</label>
+        <label class="success">{{successMessage}}</label>
+        <br>
+        <a (click)="tryRegister(registerForm.value)">Registrarse</a>
+      </form>
+    </div>
+  </div>
+</div>
