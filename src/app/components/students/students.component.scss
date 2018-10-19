@@ -1,6 +1,6 @@
 .students {
   display: grid;
-  grid-template-rows: 3fr 1fr 8fr 1fr;
+  grid-template-rows: 3fr 1fr 4fr 1fr;
 }
 
 .s-top {
@@ -28,6 +28,10 @@
 
 .s-bottom {
   grid-row-start: 3;
+}
+
+.s-bottom2 {
+  grid-row-start: 5;
 }
 
 .square {

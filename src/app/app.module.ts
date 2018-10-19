@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth.guard';
 import { UserService } from './services/user.service';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -43,7 +44,7 @@ import { FooterComponent } from './components/layout/footer/footer.component';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     ReactiveFormsModule
   ],
-  providers: [AuthService, UserService, NavbarComponent, AuthGuard],
+  providers: [AuthService, UserService, AuthGuard, AngularFireDatabase],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

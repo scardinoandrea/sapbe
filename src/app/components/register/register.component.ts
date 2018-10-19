@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { FirebaseUserModel } from '../../models/user.model';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+
 
 @Component({
   selector: 'app-register',
@@ -10,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
+  user = {} as FirebaseUserModel;
   errorMessage: string;
   successMessage: string;
   registerForm: FormGroup;
@@ -17,7 +22,9 @@ export class RegisterComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private afAuth: AngularFireAuth,
+    private afdb: AngularFireDatabase
   ) {
     this.createForm();
    }
@@ -27,6 +34,7 @@ export class RegisterComponent implements OnInit {
 
   createForm() {
     this.registerForm = this.fb.group({
+      username: ['', Validators.required ],
       email: ['', Validators.required ],
       password: ['',Validators.required]
     });
@@ -44,5 +52,6 @@ export class RegisterComponent implements OnInit {
       this.successMessage = "";
     })
   }
+
 
 }

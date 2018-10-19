@@ -1,10 +1,12 @@
+import { SharedService } from './../../../services/shared.service';
+import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user.service';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FirebaseUserModel } from '../../../services/user.model';
+import { FirebaseUserModel } from '../../../models/user.model';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-navbar',
@@ -13,16 +15,21 @@ import { FirebaseUserModel } from '../../../services/user.model';
 })
 export class NavbarComponent implements OnInit {
 
-  user: FirebaseUserModel = new FirebaseUserModel();
-
+  user = this.userService.getCurrentUser();
+  currentUser: any;
+  currentUserName: any;
 
   constructor(public userService: UserService,
     public authService: AuthService,
-    private router: Router,
-    private location : Location,
-    private fb: FormBuilder) { }
+    private router: Router, 
+    private db: AngularFireDatabase) { 
+      this.currentUser = this.authService.userKey;
+      this.currentUserName = this.db.object(`/users/${this.currentUser}/username`);
+      console.log(this.currentUserName)  
+    }
 
     ngOnInit(): void {
+      console.log(this.currentUser);
     }
 
     logout(){

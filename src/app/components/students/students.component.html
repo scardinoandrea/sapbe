@@ -9,7 +9,7 @@
       <button type="button" class="btn mr-2" (click)="open(tutor)">Reasignar tutor</button>
     </div>
     <div class="square">
-      <p>100%</p>
+      <p>{{lastPercentage}}</p>
     </div>
   </div>
   <div class="s-bottom">
@@ -29,7 +29,6 @@
             <th scope="col">Fecha</th>
             <th scope="col">Tipo</th>
             <th scope="col">Comentario</th>
-            <th scope="col">Características</th>
             <th scope="col">Periodo</th>
             <th scope="col"></th>
           </tr>
@@ -39,7 +38,6 @@
             <th scope="row">{{item.date}}</th>
             <td>{{item.type}}</td>
             <td>{{item.comments | slice:0:20 }}...</td>
-            <td>{{item.characteristics | slice:0:20 }}...</td>
             <td>{{item.period}}</td>
             <td><i class="fas fa-eye" (click)="open(annotation)"></i></td>
           </tr>
@@ -48,6 +46,42 @@
     </div>
     <div class="s-buttons">
       <button type="button" class="btn" (click)="open(annotation)">Agregar anotacion</button>
+    </div>
+  </div>
+  <div class="s-bottom2">
+    <div class="square-bottom">
+      <div class="square-botton-top">
+        <div>
+          <p class="table-title">Porcentajes de exito</p>
+        </div>
+        <div>
+          <input class="form-control border rounded mr-3" type="search" placeholder="Búsqueda" [(ngModel)]="searchText"
+            id="search">
+        </div>
+      </div>
+      <table class="table table-responsive-md">
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Características</th>
+            <th scope="col">%</th>
+            <th scope="col">Periodo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of searchModel() ; let i = index;">
+            <th scope="row">{{item.date}}</th>
+            <td>{{item.characteristics | slice:0:20 }}...</td>
+            <td>{{item.percentage}}</td>
+            <td>{{item.period}}</td>
+            <td><i class="fas fa-eye" (click)="open(model)"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="s-buttons">
+      <button type="button" class="btn" (click)="open(model)">Usar modelo</button>
     </div>
   </div>
 </div>
@@ -93,6 +127,19 @@
         <label for="inputComments">Notas</label>
         <textarea class="form-control" id="inputComments"></textarea>
       </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Guardar</button>
+  </div>
+</ng-template>
+
+<ng-template #model let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <form>
       <div class="form-group">
         <label for="inputCharacteristics">Características</label>
         <br>
