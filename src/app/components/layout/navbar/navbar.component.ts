@@ -17,19 +17,32 @@ export class NavbarComponent implements OnInit {
 
   user = this.userService.getCurrentUser();
   currentUser: any;
-  currentUserName: any;
+  currentUserName: any = 'Usuario';
 
   constructor(public userService: UserService,
     public authService: AuthService,
     private router: Router, 
     private db: AngularFireDatabase) { 
       this.currentUser = this.authService.userKey;
-      this.currentUserName = this.db.object(`/users/${this.currentUser}/username`);
+      /* this.db.database.ref().child('/users/'+this.currentUser).once('value').then(function(snapshot) {
+        var username = (snapshot.val().username) || 'Anonymous';
+        return username 
+      }); */
+      this.currentUserName=this.getUser();
       console.log(this.currentUserName)  
+      //console.log(username)  
     }
 
     ngOnInit(): void {
       console.log(this.currentUser);
+    }
+
+    getUser(): Promise<any>{
+      return this.db.database.ref().child('/users/'+this.currentUser).once('value').then(function(snapshot) {
+        var username = (snapshot.val().username) || 'Anonymous';
+        console.log(username);
+        return username 
+      });
     }
 
     logout(){
