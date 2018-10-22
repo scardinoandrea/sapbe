@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
+import {AngularFireDatabase,AngularFireObject,AngularFireList} from 'angularfire2/database'
+import {AuthService} from '../../services/auth.service'
+import {Observable} from 'rxjs'
+import { query } from '@angular/core/src/render3/query';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,13 +16,41 @@ export class DashboardComponent implements OnInit {
   year2: any;
   period: any;
   searchText: any;
+  tutor: any = {email: "taco"};
 
-  constructor(private modalService: NgbModal) { }
+  constructor(
+    private modalService: NgbModal,
+    private db: AngularFireDatabase,
+    private auth: AuthService) {
+
+    }
 
   ngOnInit() {
     this.getPeriod();
+    this.db.list('/users/', ref=> ref.orderByKey().equalTo(this.auth.userKey)).valueChanges().subscribe(data=>{
+      console.log("Tutor",data[0]['email'])
+      this.tutor = data[0];
+      console.log("Tutor2",this.tutor.email)
+    })
+    this.db.list('/users/'+this.auth.userKey+"/students").valueChanges().subscribe(data=>{
+      this.students = []
+      data.forEach(student=>{
+        console.log("cedula",student[0])
+        this.db.list('/students/', ref => ref.orderByChild("cedula").equalTo(student[0])).valueChanges().subscribe(student=>{
+          let data = student[0];
+          let newStudent = {
+          id: data['cedula'],
+          name: data['name'],
+          type: data['type'],
+          tutor: data['tutor'],
+          percentage: data['percentage']
+          }
+          console.log("Estudiante:",data)
+          this.students.push(newStudent)
+        })
+      })
+    });
   }
-
   getPeriod(){
     if(this.today.getMonth()<=2){
       this.year1=this.today.getFullYear()-1;
