@@ -32,11 +32,8 @@ export class DashboardComponent implements OnInit {
       this.tutor = data[0];
       console.log("Tutor2",this.tutor.email)
     })
-    this.db.list('/users/'+this.auth.userKey+"/students").valueChanges().subscribe(data=>{
       this.students = []
-      data.forEach(student=>{
-        console.log("cedula",student[0])
-        this.db.list('/students/', ref => ref.orderByChild("cedula").equalTo(student[0])).valueChanges().subscribe(student=>{
+        this.db.list('/students', ref => ref.orderByChild('tutor_key').equalTo(this.auth.userKey)).valueChanges().subscribe(student=>{
           let data = student[0];
           let newStudent = {
           id: data['cedula'],
@@ -48,8 +45,6 @@ export class DashboardComponent implements OnInit {
           console.log("Estudiante:",data)
           this.students.push(newStudent)
         })
-      })
-    });
   }
   getPeriod(){
     if(this.today.getMonth()<=2){
