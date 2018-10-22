@@ -6,7 +6,11 @@
       <p><strong>Cédula:</strong> 26510233</p>
       <p><strong>Periodo de ingreso:</strong> 1415-1</p>
       <p><strong>Tutor:</strong> Anais Guillen</p>
-      <button type="button" class="btn mr-2" (click)="open(tutor)">Reasignar tutor</button>
+      <p><strong>Estado:</strong> Activo</p>
+      <div class="d-buttons">
+        <button type="button" class="btn mr-2" (click)="open(tutor)">Reasignar tutor</button>
+        <button type="button" class="btn mr-2" (click)="open(status)">Cambiar estado</button>
+      </div>
     </div>
     <div class="square">
       <p>{{lastPercentage}}</p>
@@ -100,6 +104,27 @@
           <option>3</option>
           <option>4</option>
           <option>5</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Guardar</button>
+  </div>
+</ng-template>
+
+<ng-template #status let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <form>
+      <div class="form-group">
+        <label for="selectStatus">Estado del becado</label>
+        <select class="form-control" id="selectStatus">
+          <option>Activo</option>
+          <option>Inactivo</option>
+          <option>Graduado</option>
         </select>
       </div>
     </form>

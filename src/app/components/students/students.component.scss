@@ -8,6 +8,12 @@
   justify-content: space-between;
 }
 
+.d-buttons{
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+}
+
 .square {
   height: 20vh;
   width: 30vw;
@@ -32,6 +38,7 @@
 
 .s-bottom2 {
   grid-row-start: 5;
+  margin-bottom: 4vh;
 }
 
 .square {
@@ -119,4 +126,11 @@ i {
     font-size: x-large;
   }
 
+  .square{
+    display: none;
+  }
+
+  .square-bottom .form-control{
+    width: 35vw;
+  }
 }
