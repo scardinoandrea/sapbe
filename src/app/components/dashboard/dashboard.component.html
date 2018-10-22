@@ -49,7 +49,7 @@
   </div>
 </div>
 
-<ng-template #tutor let-modal>
+<!-- <ng-template #tutor let-modal>
   <div class="modal-body">
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
@@ -59,10 +59,6 @@
         <label for="inputName">Nombre completo</label>
         <input type="text" class="form-control" id="inputName">
       </div>
-      <!-- <div class="form-group">
-        <label for="inputPosition">Cargo</label>
-        <input type="text" class="form-control" id="inputPosition">
-      </div> -->
       <div class="form-group">
         <label for="inputEmail">Correo</label>
         <input type="email" class="form-control" id="inputEmail">
@@ -72,43 +68,40 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Guardar</button>
   </div>
-</ng-template>
+</ng-template> -->
 
 <ng-template #student let-modal>
   <div class="modal-body">
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
-    <form>
+    <form [formGroup]="studentForm">
       <div class="form-group">
         <label for="inputName">Nombre completo</label>
-        <input type="text" class="form-control" id="inputName">
+        <input type="text" class="form-control" id="inputName"  formControlName="name">
       </div>
       <div class="form-group">
         <label for="inputType">Tipología</label>
-        <input type="text" class="form-control" id="inputType">
+        <input type="text" class="form-control" id="inputType"  formControlName="type">
       </div>
       <div class="form-group">
         <label for="inputId">Cédula</label>
-        <input type="number" class="form-control" id="inputId">
+        <input type="number" class="form-control" id="inputId"  formControlName="personalId">
       </div>
       <div class="form-group">
         <label for="inputEntry">Periodo de Ingreso</label>
-        <input type="text" class="form-control" id="inputEntry">
+        <input type="text" class="form-control" id="inputEntry"  formControlName="period">
       </div>
       <div class="form-group">
         <label for="selectTutor">Tutor</label>
-        <select class="form-control" id="selectTutor">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+        <select class="form-control" id="selectTutor"  formControlName="tutor_key">
+          <option *ngFor="let item of tutorList" [value]="item.key">{{item.name}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="selectStatus">Estado</label>
-        <select class="form-control" id="selectStatus">
+        <select class="form-control" id="selectStatus"  formControlName="status">
+          
           <option>Activo</option>
           <option>Inactivo</option>
           <option>Graduado</option>
@@ -117,6 +110,6 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="close()">Guardar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="close(); saveData('newStudent')">Guardar</button>
   </div>
 </ng-template>

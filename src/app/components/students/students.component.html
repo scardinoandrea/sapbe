@@ -90,28 +90,6 @@
   </div>
 </div>
 
-<ng-template #tutor let-modal>
-  <div class="modal-body">
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <form>
-      <div class="form-group">
-        <label for="selectTutor">Tutor</label>
-        <select class="form-control" id="selectTutor">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Guardar</button>
-  </div>
-</ng-template>
 
 <ng-template #status let-modal>
   <div class="modal-body">

@@ -3,7 +3,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AngularFireDatabase,AngularFireObject,AngularFireList} from 'angularfire2/database'
 import {AuthService} from '../../services/auth.service'
 import {Observable} from 'rxjs'
+import { map } from 'rxjs/operators';
 import { query } from '@angular/core/src/render3/query';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -17,12 +19,23 @@ export class DashboardComponent implements OnInit {
   period: any;
   searchText: any;
   tutor: any = {email: "taco"};
+  studentForm: FormGroup;
+  tutorList: any=[];
 
   constructor(
     private modalService: NgbModal,
     private db: AngularFireDatabase,
-    private auth: AuthService) {
-
+    private auth: AuthService,
+    private fb: FormBuilder) {
+    
+      this.studentForm = this.fb.group({
+        name: ['', Validators.required ],
+        type: ['', Validators.required ],
+        personalId: ['',Validators.required],
+        period: ['', Validators.required ],
+        tutor_key: ['', Validators.required ],
+        status: ['', Validators.required ]
+      });
     }
 
   ngOnInit() {
@@ -33,18 +46,32 @@ export class DashboardComponent implements OnInit {
       console.log("Tutor2",this.tutor.email)
     })
       this.students = []
-        this.db.list('/students', ref => ref.orderByChild('tutor_key').equalTo(this.auth.userKey)).valueChanges().subscribe(student=>{
-          let data = student[0];
-          let newStudent = {
-            id: data['cedula'],
-            name: data['name'],
-            type: data['type'],
-            tutor: data['tutor_name'],
-            percentage: data['percentage']
-          }
-          console.log("Estudiante:",data)
-          this.students.push(newStudent)
+        this.db.list('/students', ref => ref.orderByChild('tutor_key').equalTo(this.auth.userKey)).valueChanges().subscribe(students=>{
+          this.students = [];
+          students.forEach(data=>{
+            let newStudent = {
+              id: data['personalId'],
+              name: data['name'],
+              type: data['type'],
+              tutor: data['tutor_name'],
+              percentage: data['percentage']
+            }
+            console.log("Estudiante:",data)
+            this.students.push(newStudent)
+          })
+
         })
+
+      this.db.list("/users/").snapshotChanges().subscribe(data=>{
+        data.map(c=>{
+          let tutor:any = c.payload.val();
+          this.tutorList.push({
+            key: c.payload.key,
+            name: tutor.username
+          })
+          console.log("datos,",this.tutorList)
+        })
+      })
   }
   getPeriod(){
     if(this.today.getMonth()<=2){
@@ -85,6 +112,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+ 
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
@@ -94,6 +122,22 @@ export class DashboardComponent implements OnInit {
     console.log("closed")
   }
 
+  async saveData(id){
+    if(id== 'newStudent'){
+      let newStudent = this.studentForm.value;
+      newStudent['tutor_name'] = await this.getName(newStudent.tutor_key)
+      console.log("student",newStudent) 
+      this.db.list("/students/").push(newStudent);
+    }
+  }
+
+  async getName(key){
+    let tutor = await this.tutorList.filter(data=>{
+      if(data.key==key) 
+        return data
+    });
+    return tutor[0]["name"]
+  }
 
   students=[
     {id: '26510233',
