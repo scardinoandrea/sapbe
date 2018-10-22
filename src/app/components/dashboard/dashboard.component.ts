@@ -36,11 +36,11 @@ export class DashboardComponent implements OnInit {
         this.db.list('/students', ref => ref.orderByChild('tutor_key').equalTo(this.auth.userKey)).valueChanges().subscribe(student=>{
           let data = student[0];
           let newStudent = {
-          id: data['cedula'],
-          name: data['name'],
-          type: data['type'],
-          tutor: data['tutor'],
-          percentage: data['percentage']
+            id: data['cedula'],
+            name: data['name'],
+            type: data['type'],
+            tutor: data['tutor_name'],
+            percentage: data['percentage']
           }
           console.log("Estudiante:",data)
           this.students.push(newStudent)
@@ -90,6 +90,9 @@ export class DashboardComponent implements OnInit {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
   }
 
+  close(){
+    console.log("closed")
+  }
 
 
   students=[
