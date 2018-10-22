@@ -1,0 +1,205 @@
+<div class="students">
+  <div class="s-top">
+    <div>
+      <h1><strong>Andrea Scardino</strong></h1>
+      <p><strong>Tipología:</strong> Académica</p>
+      <p><strong>Cédula:</strong> 26510233</p>
+      <p><strong>Periodo de ingreso:</strong> 1415-1</p>
+      <p><strong>Tutor:</strong> Anais Guillen</p>
+      <p><strong>Estado:</strong> Activo</p>
+      <div class="d-buttons">
+        <button type="button" class="btn mr-2" (click)="open(tutor)">Reasignar tutor</button>
+        <button type="button" class="btn mr-2" (click)="open(status)">Cambiar estado</button>
+      </div>
+    </div>
+    <div class="square">
+      <p>{{lastPercentage}}</p>
+    </div>
+  </div>
+  <div class="s-bottom">
+    <div class="square-bottom">
+      <div class="square-botton-top">
+        <div>
+          <p class="table-title">Anotaciones</p>
+        </div>
+        <div>
+          <input class="form-control border rounded mr-3" type="search" placeholder="Búsqueda" [(ngModel)]="searchText"
+            id="search">
+        </div>
+      </div>
+      <table class="table table-responsive-md">
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Comentario</th>
+            <th scope="col">Periodo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of search() ; let i = index;">
+            <th scope="row">{{item.date}}</th>
+            <td>{{item.type}}</td>
+            <td>{{item.comments | slice:0:20 }}...</td>
+            <td>{{item.period}}</td>
+            <td><i class="fas fa-eye" (click)="open(annotation)"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="s-buttons">
+      <button type="button" class="btn" (click)="open(annotation)">Agregar anotacion</button>
+    </div>
+  </div>
+  <div class="s-bottom2">
+    <div class="square-bottom">
+      <div class="square-botton-top">
+        <div>
+          <p class="table-title">Porcentajes de exito</p>
+        </div>
+        <div>
+          <input class="form-control border rounded mr-3" type="search" placeholder="Búsqueda" [(ngModel)]="searchText"
+            id="search">
+        </div>
+      </div>
+      <table class="table table-responsive-md">
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Características</th>
+            <th scope="col">%</th>
+            <th scope="col">Periodo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of searchModel() ; let i = index;">
+            <th scope="row">{{item.date}}</th>
+            <td>{{item.characteristics | slice:0:20 }}...</td>
+            <td>{{item.percentage}}</td>
+            <td>{{item.period}}</td>
+            <td><i class="fas fa-eye" (click)="open(model)"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="s-buttons">
+      <button type="button" class="btn" (click)="open(model)">Usar modelo</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #tutor let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <form>
+      <div class="form-group">
+        <label for="selectTutor">Tutor</label>
+        <select class="form-control" id="selectTutor">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Guardar</button>
+  </div>
+</ng-template>
+
+<ng-template #status let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <form>
+      <div class="form-group">
+        <label for="selectStatus">Estado del becado</label>
+        <select class="form-control" id="selectStatus">
+          <option>Activo</option>
+          <option>Inactivo</option>
+          <option>Graduado</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Guardar</button>
+  </div>
+</ng-template>
+
+<ng-template #annotation let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <form>
+      <div class="form-group">
+        <label for="inputDate">Fecha</label>
+        <input type="date" class="form-control" id="inputDate">
+      </div>
+      <div class="form-group">
+        <label for="inputType">Tipo de anotación</label>
+        <input type="text" class="form-control" id="inputType">
+      </div>
+      <div class="form-group">
+        <label for="inputComments">Notas</label>
+        <textarea class="form-control" id="inputComments"></textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Guardar</button>
+  </div>
+</ng-template>
+
+<ng-template #model let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <form>
+      <div class="form-group">
+        <label for="inputCharacteristics">Características</label>
+        <br>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+          <label class="form-check-label" for="inlineCheckbox1">Es ordenado y organizado</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+          <label class="form-check-label" for="inlineCheckbox2">Sus clases son de calidad</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+          <label class="form-check-label" for="inlineCheckbox3">Tiene apoyo de profesores</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+          <label class="form-check-label" for="inlineCheckbox4">Elabora guías de estudios</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+          <label class="form-check-label" for="inlineCheckbox5">Siente pasión por su carrera</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6">
+          <label class="form-check-label" for="inlineCheckbox6">Sus clases son de regular calidad</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7">
+          <label class="form-check-label" for="inlineCheckbox7">Tiene dificultades con las materias</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Guardar</button>
+  </div>
+</ng-template>

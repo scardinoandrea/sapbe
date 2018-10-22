@@ -1,0 +1,41 @@
+.navbar {
+  height: 10vh;
+  padding-top: 2vh;
+  background-color: white !important;
+
+}
+
+.navbar-brand {
+  display: flex !important;
+  color: #fd7e14;;
+  font-weight: bold;
+  font-size: xx-large;
+  align-self: center;
+}
+
+.text {
+  font-size: x-small;
+  margin-top: 3.5vh;
+  margin-left: 1vw;
+  color: #616161;
+  display: flex;
+  align-content: left;
+  align-self: flex-end;
+}
+
+::ng-deep {
+  .dropdown {
+    .btn {
+      color: #616161 !important;
+      background-color: transparent !important;
+      border: none !important;
+      box-shadow: none;
+      font-size: small;
+      margin-bottom: 3vh;
+    }
+
+    .dropdown-menu {
+      left: -30px !important;
+    }
+  }
+}
