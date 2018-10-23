@@ -44,7 +44,7 @@
     </div>
     <div class="d-buttons">
       <!-- <button type="button" class="btn mr-2" (click)="open(tutor)">Agregar tutor</button> -->
-      <button type="button" class="btn " (click)="open(student)">Agregar becado</button>
+      <button *ngIf='tutor.role==admin' type="button" class="btn " (click)="open(student)">Agregar becado</button>
     </div>
   </div>
 </div>

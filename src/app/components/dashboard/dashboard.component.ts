@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
     this.db.list('/users/', ref=> ref.orderByKey().equalTo(this.auth.userKey)).valueChanges().subscribe(data=>{
       console.log("Tutor",data[0]['email'])
       this.tutor = data[0];
-      console.log("Tutor2",this.tutor.email)
+      console.log("Tutor2",this.tutor.role)
     })
       this.students = []
         this.db.list('/students', ref => ref.orderByChild('tutor_key').equalTo(this.auth.userKey)).valueChanges().subscribe(students=>{
