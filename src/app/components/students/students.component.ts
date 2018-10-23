@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Route, Router, ActivatedRoute } from '@angular/router';
+import {AngularFireDatabase,AngularFireObject,AngularFireList} from 'angularfire2/database'
+import {Observable} from 'rxjs'
+import { map } from 'rxjs/operators';
+import { UserService } from '../../services/user.service';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-students',
@@ -9,10 +15,55 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 export class StudentsComponent implements OnInit {
   searchText: any;
   lastPercentage: any;
-
-  constructor(private modalService: NgbModal) { }
+  student: any;
+  studentKey: any;
+  noteForm: FormGroup;
+  modelForm: FormGroup;
+  statusForm: FormGroup;
+  currentAnnotation: any;
+  currentInputs: Array<String> = ['Es ordenado y organizado','Sus clases son de calidad','Tiene apoyo de profesores','Elabora guías de estudios','Siente pasión por su carrera','Es planificado','Tiene dificultades con las materias']
+  constructor(
+    private modalService: NgbModal,
+    private route: ActivatedRoute,
+    private db: AngularFireDatabase,
+    public userService: UserService,
+    private fb: FormBuilder) { 
+      this.noteForm = this.fb.group({
+        date: ['', Validators.required ],
+        type: ['', Validators.required ],
+        content: ['',Validators.required],
+      });
+      let formControls ={}
+      this.currentInputs.forEach(input=>{
+        formControls[input.toString()] = [false, Validators.required ];
+      })
+      this.modelForm = this.fb.group(formControls);
+      this.statusForm = this.fb.group({
+        status: ['', Validators.required ],
+      })
+    }
 
   ngOnInit() {
+    let id = Number(this.route.snapshot.params.id)
+    console.log("ID:",id)
+    // this.db.list("/students/", ref=> ref.orderByChild("personalId").equalTo(id)).valueChanges().subscribe(student=>{
+    //   this.student = student[0];
+    //   console.log("student",student)
+    // })
+    this.db.list("/students/", ref=> ref.orderByChild("personalId").equalTo(id)).snapshotChanges().subscribe(data=>{
+      data.map(c=>{
+        this.student = c.payload.val();
+        this.studentKey = c.payload.key;
+        this.annotations =[];
+        
+        this.db.list("/students/"+this.studentKey+"/notes").valueChanges().subscribe(data=>{
+            data.forEach((note:any)=>{
+              this.annotations.push(note);
+            })
+        })
+      })
+    })
+
     this.lastPercentage=this.model[this.model.length - 1].percentage;
     console.log(this.model[this.model.length - 1]);
   }
@@ -43,7 +94,49 @@ export class StudentsComponent implements OnInit {
     }
   }
 
-  open(content) {
+  async saveNote(id){
+    if(id== 'newNote'){
+      let newNote = this.noteForm.value;
+       console.log("nota",newNote) 
+      this.db.list("/students/"+this.studentKey+"/notes/").push(newNote);
+    }
+  }
+
+  async saveModelResult(id){
+    if(id== 'newModelResult'){
+      let newNote = this.modelForm.value;
+        console.log("model",newNote)
+        let newArray=[];
+        this.currentInputs.forEach(input=>{
+          if(newNote[input.toString()]){
+            newArray.push(1);
+          }else{
+            newArray.push(0);
+          }
+        }) 
+        console.log("Array: "+newArray)
+      //this.db.list("/students/"+this.studentKey+"/notes/").push(newNote);
+    }
+  }
+
+  updateStatus(id){
+    var updates = [];
+    console.log("Status",this.statusForm.value)
+    this.db.list('/students/').update(this.studentKey,this.statusForm.value)
+  }
+
+  close(){
+    this.modalService.dismissAll()
+  }
+
+  open(content,item,type) {
+    if(type=='seeAnnotation'){
+      console.log("Entre")
+      this.currentAnnotation = item;
+    }else if(type=='addAnnotation'){
+      console.log("Add")
+    }
+    if(content)
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
   }
 

@@ -6,7 +6,9 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseUserModel } from '../../../models/user.model';
-import { AngularFireDatabase } from 'angularfire2/database';
+import {AngularFireDatabase,AngularFireObject,AngularFireList} from 'angularfire2/database'
+import {Observable} from 'rxjs'
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -23,22 +25,29 @@ export class NavbarComponent implements OnInit {
     public authService: AuthService,
     private router: Router, 
     private db: AngularFireDatabase) { 
-      this.currentUser = this.authService.userKey;
+      //this.currentUser = this.authService.userKey;
       /* this.db.database.ref().child('/users/'+this.currentUser).once('value').then(function(snapshot) {
         var username = (snapshot.val().username) || 'Anonymous';
         return username 
       }); */
-      this.currentUserName=this.getUser();
-      console.log(this.currentUserName)  
-      //console.log(username)  
+      // authService.currentUser
+      // this.currentUserName=this.getUser();
+      // console.log("Build",this.currentUserName)  
+      // //console.log(username)  
     }
 
     ngOnInit(): void {
       console.log(this.currentUser);
+      console.log("UserKey",this.authService.userKey)
+      this.db.list("/users/",ref=> ref.orderByKey().equalTo(this.authService.userKey)).valueChanges().subscribe(user=>{
+          let usr = user[0];
+          console.log("Usr",usr['username'])
+          this.currentUserName = usr['username'];
+      })
     }
 
     getUser(): Promise<any>{
-      return this.db.database.ref().child('/users/'+this.currentUser).once('value').then(function(snapshot) {
+      return this.db.database.ref().child('/users/'+this.authService.userKey).once('value').then(function(snapshot) {
         var username = (snapshot.val().username) || 'Anonymous';
         console.log(username);
         return username 
