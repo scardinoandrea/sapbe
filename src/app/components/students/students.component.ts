@@ -21,6 +21,7 @@ export class StudentsComponent implements OnInit {
   modelForm: FormGroup;
   statusForm: FormGroup;
   currentAnnotation: any;
+  currentModel: any;
   currentInputs: Array<String> = ['Es ordenado y organizado','Sus clases son de calidad','Tiene apoyo de profesores','Elabora guías de estudios','Siente pasión por su carrera','Tiene dificultades con las materias','Es planificado']
   constructor(
     private modalService: NgbModal,
@@ -113,7 +114,7 @@ export class StudentsComponent implements OnInit {
           if(newNote[input.toString()]){
             newArray.push(1);
             console.log("-->",input.toString())
-            characteristics.concat(input.toString()+",")
+            characteristics = characteristics.concat(input.toString()+",")
           }else{
             newArray.push(0);
           }
@@ -146,6 +147,8 @@ export class StudentsComponent implements OnInit {
       this.currentAnnotation = item;
     }else if(type=='addAnnotation'){
       console.log("Add")
+    }else if(type=='seeModel'){
+      this.currentModel =item;
     }
     if(content)
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})

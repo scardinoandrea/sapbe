@@ -128,6 +128,7 @@ export class DashboardComponent implements OnInit {
     if(id== 'newStudent'){
       let newStudent = this.studentForm.value;
       newStudent['tutor_name'] = await this.getName(newStudent.tutor_key)
+      newStudent['percentage'] = 0;
       console.log("student",newStudent) 
       this.db.list("/students/").push(newStudent);
     }

@@ -79,13 +79,13 @@
             <td>{{item.characteristics | slice:0:20 }}...</td>
             <td>{{item.percentage}}</td>
             <td>{{item.period}}</td>
-            <td><i class="fas fa-eye" (click)="open(model)"></i></td>
+            <td><i class="fas fa-eye" (click)="open(model,item,'seeModel')"></i></td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="s-buttons">
-      <button type="button" class="btn" (click)="open(model)">Usar modelo</button>
+      <button type="button" class="btn" (click)="open(model,item,'addModel')">Usar modelo</button>
     </div>
   </div>
 </div>
@@ -154,6 +154,24 @@
     <button type="button" class="btn btn-outline-dark" (click)="close();">Listo</button>
   </div>
 </ng-template>
+
+<ng-template #seeModel let-modal>
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="card">
+          <div class="card-header">
+              <h4>Fecha de Evaluación: {{currentModel.date}}</h4>
+              <h4>Resultado: {{currentModel.percentage}}</h4>
+          </div> 
+          <div class="card-body">{{currentModel.characteristics}}</div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="close();">Listo</button>
+    </div>
+  </ng-template>
 
 <ng-template #model let-modal>
   <div class="modal-body">
