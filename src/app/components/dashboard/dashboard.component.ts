@@ -46,8 +46,22 @@ export class DashboardComponent implements OnInit {
       console.log("Tutor",data[0]['email'])
       this.tutor = data[0];
       console.log("Tutor2",this.tutor.role)
-    })
-      this.students = []
+      if(this.tutor.role=="admin"){
+        this.db.list('/students').valueChanges().subscribe(students=>{
+          this.students = [];
+          students.forEach(data=>{
+            let newStudent = {
+              id: data['personalId'],
+              name: data['name'],
+              type: data['type'],
+              tutor: data['tutor_name'],
+              percentage: data['percentage']
+            }
+            console.log("Estudiante:",data)
+            this.students.push(newStudent)
+          })
+        })
+      }else{
         this.db.list('/students', ref => ref.orderByChild('tutor_key').equalTo(this.auth.userKey)).valueChanges().subscribe(students=>{
           this.students = [];
           students.forEach(data=>{
@@ -61,8 +75,10 @@ export class DashboardComponent implements OnInit {
             console.log("Estudiante:",data)
             this.students.push(newStudent)
           })
-
         })
+      }
+    })
+      this.students = []
 
       this.db.list("/users/").snapshotChanges().subscribe(data=>{
         data.map(c=>{
