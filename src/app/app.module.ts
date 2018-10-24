@@ -22,6 +22,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { NavbarComponent } from './components/layout/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
+import { NetworkService } from './services/network.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { FooterComponent } from './components/layout/footer/footer.component';
     ReactiveFormsModule,
     AngularFireDatabaseModule
   ],
-  providers: [AuthService, UserService, AuthGuard, AngularFireDatabase],
+  providers: [AuthService, UserService, AuthGuard, AngularFireDatabase,NetworkService],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

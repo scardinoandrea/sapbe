@@ -29,6 +29,7 @@
     "firebase": "^5.5.5",
     "jquery": "^1.9.1",
     "rxjs": "^6.3.3",
+    "synaptic": "^1.1.4",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

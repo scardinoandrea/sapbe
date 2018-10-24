@@ -6,7 +6,7 @@ import {Observable} from 'rxjs'
 import { map } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-
+import {NetworkService} from '../../services/network.service';
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
@@ -21,12 +21,13 @@ export class StudentsComponent implements OnInit {
   modelForm: FormGroup;
   statusForm: FormGroup;
   currentAnnotation: any;
-  currentInputs: Array<String> = ['Es ordenado y organizado','Sus clases son de calidad','Tiene apoyo de profesores','Elabora guías de estudios','Siente pasión por su carrera','Es planificado','Tiene dificultades con las materias']
+  currentInputs: Array<String> = ['Es ordenado y organizado','Sus clases son de calidad','Tiene apoyo de profesores','Elabora guías de estudios','Siente pasión por su carrera','Tiene dificultades con las materias','Es planificado']
   constructor(
     private modalService: NgbModal,
     private route: ActivatedRoute,
     private db: AngularFireDatabase,
     public userService: UserService,
+    private networkService: NetworkService,
     private fb: FormBuilder) { 
       this.noteForm = this.fb.group({
         date: ['', Validators.required ],
@@ -105,17 +106,27 @@ export class StudentsComponent implements OnInit {
   async saveModelResult(id){
     if(id== 'newModelResult'){
       let newNote = this.modelForm.value;
+      let characteristics="";
         console.log("model",newNote)
         let newArray=[];
-        this.currentInputs.forEach(input=>{
+        await this.currentInputs.forEach(input=>{
           if(newNote[input.toString()]){
             newArray.push(1);
+            console.log("-->",input.toString())
+            characteristics.concat(input.toString()+",")
           }else{
             newArray.push(0);
           }
         }) 
         console.log("Array: "+newArray)
-      //this.db.list("/students/"+this.studentKey+"/notes/").push(newNote);
+        console.log("Characteristic: "+characteristics)
+        console.log("Resultado",this.networkService.evaluate(newArray));
+        let result ={
+          date: new Date(),
+          characteristics: characteristics,
+          result: this.networkService.evaluate(newArray)
+        }
+     // this.db.list("/students/"+this.studentKey+"/results/").push(result);
     }
   }
 

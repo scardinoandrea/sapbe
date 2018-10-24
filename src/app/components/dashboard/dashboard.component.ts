@@ -6,6 +6,7 @@ import {Observable} from 'rxjs'
 import { map } from 'rxjs/operators';
 import { query } from '@angular/core/src/render3/query';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import {NetworkService} from  '../../services/network.service'
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -26,7 +27,8 @@ export class DashboardComponent implements OnInit {
     private modalService: NgbModal,
     private db: AngularFireDatabase,
     private auth: AuthService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private network : NetworkService) {
     
       this.studentForm = this.fb.group({
         name: ['', Validators.required ],
