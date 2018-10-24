@@ -48,26 +48,29 @@ export class StudentsComponent implements OnInit {
   ngOnInit() {
     let id = Number(this.route.snapshot.params.id)
     console.log("ID:",id)
-    // this.db.list("/students/", ref=> ref.orderByChild("personalId").equalTo(id)).valueChanges().subscribe(student=>{
-    //   this.student = student[0];
-    //   console.log("student",student)
-    // })
     this.db.list("/students/", ref=> ref.orderByChild("personalId").equalTo(id)).snapshotChanges().subscribe(data=>{
       data.map(c=>{
         this.student = c.payload.val();
         this.studentKey = c.payload.key;
         this.annotations =[];
-        
+        this.model =[];
         this.db.list("/students/"+this.studentKey+"/notes").valueChanges().subscribe(data=>{
             data.forEach((note:any)=>{
               this.annotations.push(note);
             })
         })
+
+        this.db.list("/students/"+this.studentKey+"/results").valueChanges().subscribe(data=>{
+          data.forEach((result:any)=>{
+            this.model.push(result)
+            this.lastPercentage=result.percentage;
+            console.log(this.lastPercentage);
+          })
+
+      })
       })
     })
 
-    this.lastPercentage=this.model[this.model.length - 1].percentage;
-    console.log(this.model[this.model.length - 1]);
   }
 
   filterIt(arr, searchKey) {
@@ -114,7 +117,7 @@ export class StudentsComponent implements OnInit {
           if(newNote[input.toString()]){
             newArray.push(1);
             console.log("-->",input.toString())
-            characteristics = characteristics.concat(input.toString()+",")
+            characteristics=characteristics.concat(input.toString()+",")
           }else{
             newArray.push(0);
           }
@@ -123,11 +126,11 @@ export class StudentsComponent implements OnInit {
         console.log("Characteristic: "+characteristics)
         console.log("Resultado",this.networkService.evaluate(newArray));
         let result ={
-          date: new Date(),
+          date: new Date().getDate(),
           characteristics: characteristics,
-          result: this.networkService.evaluate(newArray)
+          percentage: this.networkService.evaluate(newArray)[0]
         }
-     // this.db.list("/students/"+this.studentKey+"/results/").push(result);
+      this.db.list("/students/"+this.studentKey+"/results/").push(result);
     }
   }
 

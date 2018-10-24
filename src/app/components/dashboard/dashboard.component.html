@@ -12,7 +12,7 @@
     <div class="square-bottom">
       <div class="square-botton-top">
         <div>
-          <p class="table-title">Becados: {{tutor.email}}</p>
+          <p class="table-title">Becados</p>
         </div>
         <div>
           <input class="form-control border rounded mr-3" type="search" placeholder="Búsqueda" [(ngModel)]="searchText"
@@ -44,7 +44,7 @@
     </div>
     <div class="d-buttons">
       <!-- <button type="button" class="btn mr-2" (click)="open(tutor)">Agregar tutor</button> -->
-      <button *ngIf='tutor.role==admin' type="button" class="btn " (click)="open(student)">Agregar becado</button>
+      <button *ngIf='tutor.role=="admin"' type="button" class="btn " (click)="open(student)">Agregar becado</button>
     </div>
   </div>
 </div>
