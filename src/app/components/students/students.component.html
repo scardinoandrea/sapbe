@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="square">
-      <p>{{lastPercentage | number:'1.1-5'}} %</p>
+      <p>{{lastPercentage*100 | number:'1.1-5'}} %</p>
     </div>
   </div>
   <div class="s-bottom">
@@ -69,7 +69,7 @@
             <th scope="col">Fecha</th>
             <th scope="col">Características</th>
             <th scope="col">%</th>
-            <th scope="col">Periodo</th>
+            <!-- <th scope="col">Periodo</th> -->
             <th scope="col"></th>
           </tr>
         </thead>
