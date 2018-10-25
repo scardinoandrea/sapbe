@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { Route, Router, ActivatedRoute } from '@angular/router';
 import {AngularFireDatabase,AngularFireObject,AngularFireList} from 'angularfire2/database'
-import {Observable} from 'rxjs'
+import {Observable, concat} from 'rxjs'
 import { map } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import {NetworkService} from '../../services/network.service';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
@@ -14,19 +15,29 @@ import {NetworkService} from '../../services/network.service';
 })
 export class StudentsComponent implements OnInit {
   searchText: any;
+  searchTextModel: any;
+  item:any;
+  year1: any;
+  year2: any;
+  period: any;
+  months = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+  tutor: any = {email: "none"};
   lastPercentage: any;
   student: any;
   studentKey: any;
   noteForm: FormGroup;
   modelForm: FormGroup;
   statusForm: FormGroup;
+  reassignForm: FormGroup;
   currentAnnotation: any;
+  tutorList: any=[]
   currentModel: any;
   currentInputs: Array<String> = ['Es ordenado y organizado','Sus clases son de calidad','Tiene apoyo de profesores','Elabora guías de estudios','Siente pasión por su carrera','Tiene dificultades con las materias','Es planificado']
   constructor(
     private modalService: NgbModal,
     private route: ActivatedRoute,
     private db: AngularFireDatabase,
+    private auth: AuthService,
     public userService: UserService,
     private networkService: NetworkService,
     private fb: FormBuilder) { 
@@ -43,11 +54,30 @@ export class StudentsComponent implements OnInit {
       this.statusForm = this.fb.group({
         status: ['', Validators.required ],
       })
+      this.reassignForm = this.fb.group({
+        tutor_key: ['', Validators.required ],
+      });
     }
 
   ngOnInit() {
     let id = Number(this.route.snapshot.params.id)
+    this.db.list('/users/', ref=> ref.orderByKey().equalTo(this.auth.userKey)).valueChanges().subscribe(data=>{
+      console.log("Tutor",data[0]['email'])
+      this.tutor = data[0];
+      //this.tutor.role = this.tutor.role.toString()
+      console.log("Tutor2",this.tutor.role)
+    })
     console.log("ID:",id)
+    this.db.list("/users/").snapshotChanges().subscribe(data=>{
+      data.map(c=>{
+        let tutor:any = c.payload.val();
+        this.tutorList.push({
+          key: c.payload.key,
+          name: tutor.username
+        })
+        console.log("datos,",this.tutorList)
+      })
+    })
     this.db.list("/students/", ref=> ref.orderByChild("personalId").equalTo(id)).snapshotChanges().subscribe(data=>{
       data.map(c=>{
         this.student = c.payload.val();
@@ -63,14 +93,13 @@ export class StudentsComponent implements OnInit {
         this.db.list("/students/"+this.studentKey+"/results").valueChanges().subscribe(data=>{
           data.forEach((result:any)=>{
             this.model.push(result)
-            this.lastPercentage=result.percentage*100;
+            this.lastPercentage=result.percentage;
             console.log(this.lastPercentage);
           })
 
       })
       })
     })
-
   }
 
   filterIt(arr, searchKey) {
@@ -81,6 +110,9 @@ export class StudentsComponent implements OnInit {
     });
   }
 
+  isAdmin(){
+    return this.tutor? this.tutor.role.toString()=="admin": false;
+  }
   search() {
     if (!this.searchText) {
       return this.annotations;
@@ -91,12 +123,33 @@ export class StudentsComponent implements OnInit {
   }
 
   searchModel() {
-    if (!this.searchText) {
+    if (!this.searchTextModel) {
       return this.model;
     }
-    if (this.searchText) {
-      return this.filterIt(this.model, this.searchText.toLowerCase());
+    if (this.searchTextModel) {
+      return this.filterIt(this.model, this.searchTextModel.toLowerCase());
     }
+  }
+
+  getPeriod(date){
+    if(parseInt(date.substring(5, 7))<=3){
+      this.year1=parseInt(date.substr(2,4))-1;
+      this.year2=parseInt(date.substr(2,4));
+      this.period=2;
+    }else if( parseInt(date.substring(5, 7))>3 && parseInt(date.substring(5, 7))<=6){
+      this.year1=parseInt(date.substr(2,4))-1;
+      this.year2=parseInt(date.substr(2,4));
+      this.period=3;
+    }else if( parseInt(date.substring(5, 7))>6 && parseInt(date.substring(5, 7))<=8){
+      this.year1=parseInt(date.substr(2,4))-1;
+      this.year2=parseInt(date.substr(2,4));
+      this.period='I';
+    }else if( parseInt(date.substring(5, 7))>8 && parseInt(date.substring(5, 7))<=12){
+      this.year1=parseInt(date.substr(2,4));
+      this.year2=parseInt(date.substr(2,4))+1;
+      this.period=1;
+    }
+    return (""+this.year1+this.year2+'-'+this.period)
   }
 
   async saveNote(id){
@@ -126,7 +179,7 @@ export class StudentsComponent implements OnInit {
         console.log("Characteristic: "+characteristics)
         console.log("Resultado",this.networkService.evaluate(newArray));
         let result ={
-          date: new Date().getDate(),
+          date: new Date().getFullYear()+"-"+ this.months[new Date().getMonth()]+"-"+ new Date().getDate() ,
           characteristics: characteristics,
           percentage: this.networkService.evaluate(newArray)[0]
         }
@@ -139,6 +192,22 @@ export class StudentsComponent implements OnInit {
     console.log("Status",this.statusForm.value)
     this.db.list('/students/').update(this.studentKey,this.statusForm.value)
   }
+
+  updateTutor(id){
+    var updates = [];
+    let tutor = this.tutorList.filter(tutor=>{
+      if(tutor.key==this.reassignForm.value.tutor_key){
+        return tutor;
+      }
+    })
+    var newTutor = {
+      tutor_key: this.reassignForm.value.tutor_key,
+      tutor_name: tutor[0].name
+    }
+    console.log("Tutor_Key",this.reassignForm.value)
+    this.db.list('/students/').update(this.studentKey,newTutor)
+  }
+
 
   close(){
     this.modalService.dismissAll()

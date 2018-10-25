@@ -13,13 +13,13 @@ import {NetworkService} from  '../../services/network.service'
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  
+  item:any;
   today = new Date();
   year1: any;
   year2: any;
   period: any;
   searchText: any;
-  tutor: any = {email: "taco"};
+  tutor: any = {email: "none"};
   studentForm: FormGroup;
   tutorList: any=[];
 
