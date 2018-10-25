@@ -85,15 +85,17 @@ export class StudentsComponent implements OnInit {
         this.annotations =[];
         this.model =[];
         this.db.list("/students/"+this.studentKey+"/notes").valueChanges().subscribe(data=>{
-            data.forEach((note:any)=>{
+          this.annotations =[]; 
+          data.forEach((note:any)=>{
               this.annotations.push(note);
             })
         })
 
         this.db.list("/students/"+this.studentKey+"/results").valueChanges().subscribe(data=>{
+          this.model = [];
           data.forEach((result:any)=>{
             this.model.push(result)
-            this.lastPercentage=result.percentage;
+            this.lastPercentage=result.percentage *100;
             console.log(this.lastPercentage);
           })
 
@@ -184,6 +186,11 @@ export class StudentsComponent implements OnInit {
           percentage: this.networkService.evaluate(newArray)[0]
         }
       this.db.list("/students/"+this.studentKey+"/results/").push(result);
+      let lastPercentage = {
+        percentage: result.percentage
+      };
+      this.db.list('/students/').update(this.studentKey,lastPercentage)
+ 
     }
   }
 
