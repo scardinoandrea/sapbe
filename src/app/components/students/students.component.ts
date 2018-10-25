@@ -63,7 +63,7 @@ export class StudentsComponent implements OnInit {
         this.db.list("/students/"+this.studentKey+"/results").valueChanges().subscribe(data=>{
           data.forEach((result:any)=>{
             this.model.push(result)
-            this.lastPercentage=result.percentage;
+            this.lastPercentage=result.percentage*100;
             console.log(this.lastPercentage);
           })
 
