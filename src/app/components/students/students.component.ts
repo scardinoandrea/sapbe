@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { Route, Router, ActivatedRoute } from '@angular/router';
 import {AngularFireDatabase,AngularFireObject,AngularFireList} from 'angularfire2/database'
-import {Observable} from 'rxjs'
+import {Observable, concat} from 'rxjs'
 import { map } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -14,6 +14,11 @@ import {NetworkService} from '../../services/network.service';
 })
 export class StudentsComponent implements OnInit {
   searchText: any;
+  searchTextModel: any;
+  year1: any;
+  year2: any;
+  period: any;
+  months = ["01","02","03","04","05","06","07","08","09","10","11","12"];
   lastPercentage: any;
   student: any;
   studentKey: any;
@@ -90,12 +95,33 @@ export class StudentsComponent implements OnInit {
   }
 
   searchModel() {
-    if (!this.searchText) {
+    if (!this.searchTextModel) {
       return this.model;
     }
-    if (this.searchText) {
-      return this.filterIt(this.model, this.searchText.toLowerCase());
+    if (this.searchTextModel) {
+      return this.filterIt(this.model, this.searchTextModel.toLowerCase());
     }
+  }
+
+  getPeriod(date){
+    if(parseInt(date.substring(5, 7))<=3){
+      this.year1=parseInt(date.substr(2,4))-1;
+      this.year2=parseInt(date.substr(2,4));
+      this.period=2;
+    }else if( parseInt(date.substring(5, 7))>3 && parseInt(date.substring(5, 7))<=6){
+      this.year1=parseInt(date.substr(2,4))-1;
+      this.year2=parseInt(date.substr(2,4));
+      this.period=3;
+    }else if( parseInt(date.substring(5, 7))>6 && parseInt(date.substring(5, 7))<=8){
+      this.year1=parseInt(date.substr(2,4))-1;
+      this.year2=parseInt(date.substr(2,4));
+      this.period='I';
+    }else if( parseInt(date.substring(5, 7))>8 && parseInt(date.substring(5, 7))<=12){
+      this.year1=parseInt(date.substr(2,4));
+      this.year2=parseInt(date.substr(2,4))+1;
+      this.period=1;
+    }
+    return (""+this.year1+this.year2+'-'+this.period)
   }
 
   async saveNote(id){
@@ -125,7 +151,7 @@ export class StudentsComponent implements OnInit {
         console.log("Characteristic: "+characteristics)
         console.log("Resultado",this.networkService.evaluate(newArray));
         let result ={
-          date: new Date().getDate(),
+          date: new Date().getFullYear()+"-"+ this.months[new Date().getMonth()]+"-"+ new Date().getDate() ,
           characteristics: characteristics,
           percentage: this.networkService.evaluate(newArray)[0]
         }

@@ -36,7 +36,7 @@
             <td>{{item.name}}</td>
             <td>{{item.type}}</td>
             <td>{{item.tutor}}</td>
-            <td>{{item.percentage}}</td>
+            <td>{{item.percentage*100 | number:'1.1-5'}}</td>
             <td><i class="fas fa-eye" routerLink="/student/{{item.id}}"></i></td>
           </tr>
         </tbody>

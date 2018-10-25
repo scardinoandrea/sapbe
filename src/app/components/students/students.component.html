@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="square">
-      <p>{{lastPercentage}}</p>
+      <p>{{lastPercentage*100 | number:'1.1-5'}} %</p>
     </div>
   </div>
   <div class="s-bottom">
@@ -42,7 +42,7 @@
             <th scope="row">{{item.date}}</th>
             <td>{{item.type}}</td>
             <td>{{item.content | slice:0:20 }}...</td>
-            <td>{{item.period}}</td>
+            <td>{{getPeriod(item.date)}}</td>
             <td><i class="fas fa-eye" (click)="open(seeAnnotation,item,'seeAnnotation')"></i></td>
           </tr>
         </tbody>
@@ -77,8 +77,8 @@
           <tr *ngFor="let item of searchModel() ; let i = index;">
             <th scope="row">{{item.date}}</th>
             <td>{{item.characteristics | slice:0:20 }}...</td>
-            <td>{{item.percentage}}</td>
-            <td>{{item.period}}</td>
+            <td>{{item.percentage*100 | number:'1.1-5'}}</td>
+            <!-- <td>{{item.period}}</td> -->
             <td><i class="fas fa-eye" (click)="open(model)"></i></td>
           </tr>
         </tbody>
