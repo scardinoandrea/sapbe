@@ -1,32 +1,82 @@
-[debug] [2018-10-25T12:48:27.720Z] ----------------------------------------------------------------------
-[debug] [2018-10-25T12:48:27.724Z] Command:       /usr/bin/node /usr/local/bin/firebase deploy
-[debug] [2018-10-25T12:48:27.724Z] CLI Version:   3.19.1
-[debug] [2018-10-25T12:48:27.724Z] Platform:      linux
-[debug] [2018-10-25T12:48:27.724Z] Node Version:  v8.10.0
-[debug] [2018-10-25T12:48:27.725Z] Time:          Thu Oct 25 2018 08:48:27 GMT-0400 (-04)
-[debug] [2018-10-25T12:48:27.725Z] ----------------------------------------------------------------------
+[debug] [2018-10-25T15:02:08.740Z] ----------------------------------------------------------------------
+[debug] [2018-10-25T15:02:08.744Z] Command:       /usr/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-10-25T15:02:08.744Z] CLI Version:   3.19.1
+[debug] [2018-10-25T15:02:08.744Z] Platform:      linux
+[debug] [2018-10-25T15:02:08.744Z] Node Version:  v8.10.0
+[debug] [2018-10-25T15:02:08.745Z] Time:          Thu Oct 25 2018 11:02:08 GMT-0400 (-04)
+[debug] [2018-10-25T15:02:08.745Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2018-10-25T12:48:27.744Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-10-25T12:48:27.745Z] > authorizing via signed-in user
-[debug] [2018-10-25T12:48:27.748Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/sapbe-unimet  
+[debug] [2018-10-25T15:02:08.760Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-25T15:02:08.760Z] > authorizing via signed-in user
+[debug] [2018-10-25T15:02:08.764Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/sapbe-unimet  
   
- Thu Oct 25 2018 08:48:27 GMT-0400 (-04)
-[debug] [2018-10-25T12:48:28.691Z] <<< HTTP RESPONSE 200
-[debug] [2018-10-25T12:48:28.692Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/sapbe-unimet/tokens  
+ Thu Oct 25 2018 11:02:08 GMT-0400 (-04)
+[debug] [2018-10-25T15:02:10.093Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-25T15:02:10.095Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/sapbe-unimet/tokens  
   
- Thu Oct 25 2018 08:48:28 GMT-0400 (-04)
-[debug] [2018-10-25T12:48:29.381Z] <<< HTTP RESPONSE 200
+ Thu Oct 25 2018 11:02:10 GMT-0400 (-04)
+[debug] [2018-10-25T15:02:12.103Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Deploying to 'sapbe-unimet'...
 [info] 
 [info] i  deploying hosting
 [info] i  hosting: preparing dist/sapbe directory for upload...
-[debug] [2018-10-25T12:48:31.843Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/sapbe-unimet/uploads/-LPfGDDSJU7P5jvYhKFU?fileCount=17&message=  
+[debug] [2018-10-25T15:02:14.568Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/sapbe-unimet/uploads/-LPfjov6k8jFcIlRBis3?fileCount=17&message=  
   
- Thu Oct 25 2018 08:48:31 GMT-0400 (-04)
-[debug] [2018-10-25T12:50:45.397Z] <<< HTTP RESPONSE 410
-[debug] [2018-10-25T12:50:45.398Z] <<< HTTP RESPONSE BODY undefined
-[debug] [2018-10-25T12:50:45.403Z] TypeError: Cannot read property 'error' of undefined
+ Thu Oct 25 2018 11:02:14 GMT-0400 (-04)
+[debug] [2018-10-25T15:04:22.791Z] <<< HTTP RESPONSE 410
+[debug] [2018-10-25T15:04:22.792Z] <<< HTTP RESPONSE BODY undefined
+[debug] [2018-10-25T15:04:22.794Z] TypeError: Cannot read property 'error' of undefined
+    at module.exports (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:10:13)
+    at Request._callback (/usr/local/lib/node_modules/firebase-tools/lib/api.js:47:25)
+    at Request.self.callback (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:185:22)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1157:10)
+    at emitOne (events.js:116:13)
+    at Request.emit (events.js:211:7)
+    at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1079:12)
+    at Object.onceWrapper (events.js:313:30)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2018-10-25T17:29:53.861Z] ----------------------------------------------------------------------
+[debug] [2018-10-25T17:29:53.865Z] Command:       /usr/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-10-25T17:29:53.865Z] CLI Version:   3.19.1
+[debug] [2018-10-25T17:29:53.866Z] Platform:      linux
+[debug] [2018-10-25T17:29:53.866Z] Node Version:  v8.10.0
+[debug] [2018-10-25T17:29:53.866Z] Time:          Thu Oct 25 2018 13:29:53 GMT-0400 (-04)
+[debug] [2018-10-25T17:29:53.866Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-10-25T17:29:53.881Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-25T17:29:53.881Z] > authorizing via signed-in user
+[debug] [2018-10-25T17:29:53.885Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-10-25T17:29:53.885Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/-6BmwE9ollV9qsSiCHl98wkWRjSFCZezVGVgDGAJ554',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Oct 25 2018 13:29:53 GMT-0400 (-04)
+[debug] [2018-10-25T17:29:54.279Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-25T17:29:54.292Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/sapbe-unimet  
+  
+ Thu Oct 25 2018 13:29:54 GMT-0400 (-04)
+[debug] [2018-10-25T17:29:54.905Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-25T17:29:54.908Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/sapbe-unimet/tokens  
+  
+ Thu Oct 25 2018 13:29:54 GMT-0400 (-04)
+[debug] [2018-10-25T17:29:55.367Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'sapbe-unimet'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing dist/sapbe directory for upload...
+[debug] [2018-10-25T17:29:57.007Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/sapbe-unimet/uploads/-LPgGcqaBstPgAvxPraU?fileCount=17&message=  
+  
+ Thu Oct 25 2018 13:29:57 GMT-0400 (-04)
+[debug] [2018-10-25T17:30:01.983Z] <<< HTTP RESPONSE 410
+[debug] [2018-10-25T17:30:01.984Z] <<< HTTP RESPONSE BODY undefined
+[debug] [2018-10-25T17:30:01.988Z] TypeError: Cannot read property 'error' of undefined
     at module.exports (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:10:13)
     at Request._callback (/usr/local/lib/node_modules/firebase-tools/lib/api.js:47:25)
     at Request.self.callback (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:185:22)
