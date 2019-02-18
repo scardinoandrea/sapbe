@@ -1,0 +1,40 @@
+.login {
+  display: grid;
+  grid-template-rows: 1fr 4fr 1fr;
+  grid-template-columns: 1fr 4fr 1fr;
+  height: 100vh;
+}
+
+.square {
+  min-height: 300px;
+  max-height: 300px;
+  min-width: 50%;
+  max-width: 500px;
+  background-color: white;
+  border: 1px solid #6161;
+  border-radius: 10px;
+  grid-row-start: 2;
+  grid-column-start: 2;
+  margin: auto;
+}
+
+h4 {
+  color: #fd7e14;
+  font-weight: bold;
+  text-align: center;
+}
+
+.form {
+  height: 40vh;
+  width: 30vw;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+a {
+  color: #fd7e14;
+  font-weight: bold;
+}

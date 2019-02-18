@@ -1,0 +1,122 @@
+<div class="dashboard">
+  <div class="d-top">
+    <div class="square">
+      <p>Becados: {{students.length}}</p>
+    </div>
+    <div class="square">
+      <p>Periodo: {{year1}}{{year2}}-{{period}}</p>
+    </div>
+  </div>
+
+  <div class="d-bottom">
+    <div class="square-bottom">
+      <div class="square-botton-top">
+        <div>
+          <p class="table-title">Becados</p>
+        </div>
+        <div>
+          <input class="form-control border rounded mr-3" type="search" placeholder="Búsqueda" [(ngModel)]="searchText"
+            id="search">
+        </div>
+      </div>
+      <table class="table table-responsive-md">
+        <thead>
+          <tr>
+            <th scope="col">Cédula</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Tipología</th>
+            <th scope="col">Tutor</th>
+            <th scope="col">%</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of search() ; let i = index;">
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.name}}</td>
+            <td>{{item.type}}</td>
+            <td>{{item.tutor}}</td>
+            <td>{{item.percentage*100 | number:'1.1-5'}}</td>
+            <td><i class="fas fa-eye" routerLink="/student/{{item.id}}"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-buttons">
+      <!-- <button type="button" class="btn mr-2" (click)="open(tutor)">Agregar tutor</button> -->
+      <button *ngIf='tutor.role=="admin"' type="button" class="btn " (click)="open(student)">Agregar becado</button>
+    </div>
+  </div>
+</div>
+
+<!-- <ng-template #tutor let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <form>
+      <div class="form-group">
+        <label for="inputName">Nombre completo</label>
+        <input type="text" class="form-control" id="inputName">
+      </div>
+      <div class="form-group">
+        <label for="inputEmail">Correo</label>
+        <input type="email" class="form-control" id="inputEmail">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Guardar</button>
+  </div>
+</ng-template> -->
+
+<ng-template #student let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <form [formGroup]="studentForm">
+      <div class="form-group">
+        <label for="inputName">Nombre completo</label>
+        <input type="text" class="form-control" id="inputName"  formControlName="name">
+      </div>
+      <div class="form-group">
+        <label for="inputType">Tipología</label>
+        <!-- <input type="text" class="form-control" id="inputType"  formControlName="type"> -->
+        <select class="form-control" id="inputType"  formControlName="type">
+          <option>Académica</option>
+          <option>Artística</option>
+          <option>Deportiva</option>
+          <option>Compromiso cívico</option>
+          <option>Emprendimiento</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="inputId">Cédula</label>
+        <input type="number" class="form-control" id="inputId"  formControlName="personalId">
+      </div>
+      <div class="form-group">
+        <label for="inputEntry">Periodo de Ingreso</label>
+        <input type="text" class="form-control" id="inputEntry"  formControlName="period">
+      </div>
+      <div class="form-group">
+        <label for="selectTutor">Tutor</label>
+        <select class="form-control" id="selectTutor"  formControlName="tutor_key">
+          <option *ngFor="let item of tutorList" [value]="item.key">{{item.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="selectStatus">Estado</label>
+        <select class="form-control" id="selectStatus"  formControlName="status">
+          
+          <option>Activo</option>
+          <option>Inactivo</option>
+          <option>Graduado</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="saveData('newStudent'); modal.dismiss('Cross click')">Guardar</button>
+  </div>
+</ng-template>
