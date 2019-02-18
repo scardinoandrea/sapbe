@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
     private db: AngularFireDatabase,
     private auth: AuthService,
     private fb: FormBuilder,
-    private network : NetworkService) {
+    private network: NetworkService) {
     
       this.studentForm = this.fb.group({
         name: ['', Validators.required ],
