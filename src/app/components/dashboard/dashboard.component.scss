@@ -33,6 +33,7 @@
 .square-bottom {
   height: 45vh;
   width: 100%;
+  min-height: fit-content;
   background-color: white;
   border: 1px solid #6161;
   display: grid;

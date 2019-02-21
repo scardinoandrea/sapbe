@@ -32,7 +32,22 @@ export class StudentsComponent implements OnInit {
   currentAnnotation: any;
   tutorList: any=[]
   currentModel: any;
-  currentInputs: Array<String> = ['Es ordenado y organizado','Sus clases son de calidad','Tiene apoyo de profesores','Elabora guías de estudios','Siente pasión por su carrera','Tiene dificultades con las materias','Es planificado']
+  currentInputs: Array<String> = [
+    'Es ordenado y organizado',
+    'Sus clases son de calidad',
+    'Tiene apoyo de profesores',
+    'Elabora guías de estudios',
+    'Siente amor por su carrera',
+    'Tiene dificultades con las materias',
+    'Es planificado',
+    'Tiene una buena relación social',
+    'Tiene fuerza de voluntad',
+    'Repasa y mantiene las materias al día',
+    'Ha sufrido de estrés',
+    'Es dedicado',
+    'Tiene problemas económicos',
+    'Interactua en clases'
+  ];
   constructor(
     private modalService: NgbModal,
     private route: ActivatedRoute,

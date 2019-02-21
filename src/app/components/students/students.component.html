@@ -49,14 +49,14 @@
       </table>
     </div>
     <div class="s-buttons">
-      <button type="button" class="btn" (click)="open(annotation,item,'addAnnotation')">Agregar anotacion</button>
+      <button type="button" class="btn" (click)="open(annotation,item,'addAnnotation')">Agregar anotación</button>
     </div>
   </div>
   <div class="s-bottom2">
     <div class="square-bottom">
       <div class="square-botton-top">
         <div>
-          <p class="table-title">Porcentajes de exito</p>
+          <p class="table-title">Porcentajes de éxito</p>
         </div>
         <div>
           <input class="form-control border rounded mr-3" type="search" placeholder="Búsqueda" [(ngModel)]="searchText"
@@ -69,7 +69,7 @@
             <th scope="col">Fecha</th>
             <th scope="col">Características</th>
             <th scope="col">%</th>
-
+            <!-- <th scope="col">Periodo</th> -->
             <th scope="col"></th>
           </tr>
         </thead>
@@ -162,8 +162,8 @@
     </button>
     <div class="card">
         <div class="card-header">
-            <h4>Fecha de la anotacion: {{currentAnnotation.date}}</h4>
-            <h4>Tipo de la anotacion: {{currentAnnotation.type}}</h4>
+            <h4>Fecha de la anotación: {{currentAnnotation.date}}</h4>
+            <h4>Tipo de la anotación: {{currentAnnotation.type}}</h4>
         </div> 
         <div class="card-body">{{currentAnnotation.content}}</div>
       </div>
