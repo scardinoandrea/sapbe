@@ -76,6 +76,7 @@ export class StudentsComponent implements OnInit {
 
   ngOnInit() {
     let id = Number(this.route.snapshot.params.id)
+    console.log("prueba")
     this.db.list('/users/', ref=> ref.orderByKey().equalTo(this.auth.userKey)).valueChanges().subscribe(data=>{
       console.log("Tutor",data[0]['email'])
       this.tutor = data[0];
@@ -195,17 +196,27 @@ export class StudentsComponent implements OnInit {
         console.log("Array: "+newArray)
         console.log("Characteristic: "+characteristics)
         console.log("Resultado",this.networkService.evaluate(newArray));
-        let result ={
-          date: new Date().getFullYear()+"-"+ this.months[new Date().getMonth()]+"-"+ new Date().getDate() ,
-          characteristics: characteristics,
-          percentage: this.networkService.evaluate(newArray)[0]
+        let svmInput = "";
+        for(let i=0;i<newArray.length;i++){
+          svmInput = svmInput.concat(newArray[i].toString())
+          if(i!=newArray.length-1) 
+            svmInput = svmInput.concat(",");
         }
-      this.db.list("/students/"+this.studentKey+"/results/").push(result);
-      let lastPercentage = {
-        percentage: result.percentage
-      };
-      this.db.list('/students/').update(this.studentKey,lastPercentage)
- 
+        console.log("SVMINPUT",svmInput);
+        this.networkService.predict(svmInput).then(svmResult=>{
+          console.log("array",svmResult)
+          console.log("SVMRESult",svmResult[0])
+          let result ={
+            date: new Date().getFullYear()+"-"+ this.months[new Date().getMonth()]+"-"+ new Date().getDate() ,
+            characteristics: characteristics,
+            percentage: svmResult[0]
+          }
+          this.db.list("/students/"+this.studentKey+"/results/").push(result);
+          let lastPercentage = {
+            percentage: result.percentage
+          };
+          this.db.list('/students/').update(this.studentKey,lastPercentage)
+        }) 
     }
   }
 

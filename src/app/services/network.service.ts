@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
 import {Layer,Network,Architecture,Trainer,Neuron} from 'synaptic'
 import {AngularFireDatabase,AngularFireObject,AngularFireList} from 'angularfire2/database'
+import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs'
 import { map } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImR1bW15QGV4YW1wbGUuY29tIiwidXNlcklEIjoiNWE4NzNiYmRiN2NiOTczZmNjMTA3NmEzIiwicGFzc3dvcmQiOiIkMmEkMTAkVFowRFdaSFUuNUdEVkNUS2dkYkVYZXNvam5sYzI4eU5pekt4WmlFd3Q1WktVNVg5TEUweDYiLCJwcm92aWRlciI6IkVtYWlsIiwiaWF0IjoxNTE4ODk1NzY1LCJleHAiOjE1MTg5Mzg5NjV9.Y70sCGgA1-DVCPondhu-L1u9RsmpId84zOASAX-V6vY'
+})
+}
 class Item {
   input: Array<number>;
   output: Array<number>;
@@ -23,9 +31,10 @@ export class NetworkService {
   tranier: Trainer;
 
   constructor(
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
+    private http: HttpClient
   ) { 
-
+  
     this.db.list('models').valueChanges().subscribe(architecture=>{
         console.log("arquitecture",architecture[0]);
         this.network = Network.fromJSON(architecture[0]);
@@ -199,6 +208,16 @@ export class NetworkService {
 
   export(){
     console.log("Export",JSON.stringify(this.network.toJSON()));
+  }
+
+  async predict(input){
+    //let input = "0,0,0,0,0,0,0,0,0,0,0,0,0,0"
+    return new Promise( (resolve, reject) => {
+      this.http.get(`https://pythonsvm.herokuapp.com?name=${input}`,httpOptions)
+      .toPromise().then( (percentage) => {
+        resolve(percentage);
+      })
+    });
   }
 
 }

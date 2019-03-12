@@ -12,7 +12,7 @@ import { AuthGuard } from './services/auth.guard';
 import { UserService } from './services/user.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-
+import {HttpClientModule, HttpHeaders, HttpClient} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -41,6 +41,7 @@ import { NetworkService } from './services/network.service';
     AppRoutingModule,
     FormsModule,
     RouterModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
